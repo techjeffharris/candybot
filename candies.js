@@ -102,12 +102,23 @@ $Player.train = function(interval) {
 	var dest = $Player.log.training.destination;
 	
 	// build the confirmation message string
-	var msg = "You're about to train at " + dest + " every "  + interval/1000 + " seconds.  Do it?";
+	var msg = "You're about to train at " + dest + " every ";
+	
+	// if interval is longer than 60 seconds
+	if (interval/1000 > 60)  {
+		// say how many minutes
+		var trainingInterval = interval/1000/60 + " minutes.  ";
+	} else {
+		// say how many seconds
+		var trainingInterval = interval/1000 + " seconds.  "; 
+	}	
+	
+	msg += trainingInterval + "Do it?";
 
 	// confirm sure they want to train in the selected destination 
 	if (window.confirm(msg)) {
 		// announce the new training schedule
-		console.log(new Date() + ': beginning training at ' + dest + ' every ' + interval/1000 + ' seconds.');
+		console.log(new Date() + ': beginning training at ' + dest + ' every ' + trainingInterval);
 		
 		// do it once now
 		$Player.workOut();
