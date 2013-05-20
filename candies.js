@@ -1,55 +1,81 @@
 
-// i want to make a player object
-// each method should have this.otherMethod(); syntax available
-$Player = {
-	log : {
-		eating : {
-			meals : 0,
-			candies : 0,
-		},
-		fundRaising : {
-			newSession : 
-		},
-		training : {
-			trainingSession : trainingSession,
-			sessions : []
-		}
-	}
-};
+var MILLI 	= 1;
+var SECOND	= 1000 * MILLI;
+var MINUTE	= 60 * SECOND;
+var HOUR	= 60 * MINUTE;
+var DAY		= 24 * HOUR;
+var WEEK	= 7 * DAY;
 
-// just realized that I can create an object with keys correspond to each quest 
-// destination and values that correspond to the default interval setting..
-trainingIntervals = {},
-trainingIntervals["The peaceful forest"] 	= 20 * 1000;
-trainingIntervals["Mount Goblin"] 			= 5 * 60 * 1000;
-trainingIntervals["Underwater Cave"] 		= 60 * 1000;
-
-function newSession() {
-	$player.log.training.sessions.push({
+function newTrainingSession() {
+	this.log.training.push({
 		destination	: 	'',
 		HP : { 
 			start : 0,
 			stop : 0
 		},
+		interval : 0,
 		intervalID : null,
+		meals : [],
 		quests : [],
-		status : 
+		started : new Date(),
+		stopped : Date,
+		
+		// returns a human-readable string with the duration of the workout
+		duration : function () {
+			// gets the difference in milliseconds
+			var difference = session.stopped.UTC() - session.started.UTC();
+			
+			var duration = { 
+				totalTime : difference
+			};
+			
+			// if longer than one week
+			if (difference > WEEK) 
+				// note the number of weeks ignore the decimals
+				duration.weeks = (difference / WEEK).toFixed(0);
+				
+				// subtract the 
+				d
+			
+			if (difference % DAY)
+				duration.days = difference / DAY;
+				
+			if (difference % HOUR) 
+				duration.hours = difference / HOUR;
+				
+			if (difference % MINUTE)
+				duration.minutes = difference / MINUTE;
+				
+			if (difference % SECOND)
+				duration.seconds = difference / SECOND;
+				
+			
+			return duration;
+		},
+		
+		// shortcut for getting the total number of candies eaten this session
+		totalCandies : function () {
+			var total = 0;
+			for (var meal in this.meals) {
+				total += this.meals[meal];
+			}
+			return total;
+		}
 	});
-	
-	// set the id of the current session
-	$player.log.training.session = $player.log.training.sessions.length -1;
 };
 
 function stopTraining() {
-	// clears the interval then sets the intervalID store to null 
-	clearInterval($Player.log.training.intervalID);
-	$Player.log.training.intervalID = null;
 	
-	var log = $Player.log;
+	var session = this.currentSession;
+
+	// clears the interval then sets the intervalID store to null 
+	clearInterval(session.intervalID);
+	
+	
 	
 	console.log('That was one heck of a training session!');
-	console.log('You worked out ' + log.training.quests + ' times.');
-	console.log('You ate ' + log.eating.candies + ' candies.' );
+	console.log('You went on ' + session.quests.length + ' epic quests.');
+	console.log('You ate ' + session.totalCandies() + ' candies.' );
 	console.log('These candies have raised your HP to ' + log.training.HP );
 };
 
@@ -80,20 +106,19 @@ function eat() {
 	console.log(msg);
 };
 
-function quest(eat) {
+function epicQuest() {
 	
-	var TIMEOUT = 5 * 1000;
-	
+	var TIMEOUT = 5;
+
 	// output 5 second notice
-	console.log(new Date() + ': starting quest in ' + TIMEOUT/1000 + ' seconds...');
+	console.log(new Date() + ': starting quest in ' + TIMEOUT + ' seconds...');
+	
+	for (var i = 1, j = TIMEOUT; i <= TIMEOUT; i++) {
+		setTimeout()
+	}
 	
 	// schedule the quest 
 	setTimeout(function() {
-		if (!!eat) {
-			// eat all the candies then begin the quest!
-			$Player.eat();
-		}
-		
 		quest.begin(true);
 		
 		// add new quest to log
@@ -113,7 +138,7 @@ function quest(eat) {
 		var msg = new Date() + ": quest " + $Player.log.training.quests + " at " + $Player.log.training.destination + ' - HP: ' + $Player.log.training.HP;
 		console.log(msg);
 		
-	}, TIMEOUT);
+	}, TIMEOUT * 1000);
 };
 
 function stockpile(interval) {
@@ -122,53 +147,104 @@ function stockpile(interval) {
 
 function train(interval, eat) {
 	
-	if (!!$Player.log.training.intervalID) {
+	if (this.currentSession.status == 'training') {
 		$Player.stopTraining();
-		
-		// set to 5 minutes by default
-		if (interval === undefined) {
-			interval = 5 * 60 * 1000;
-		}
-	
-		// get the current selected destination
-		$Player.log.training.destination = document.getElementById('quest_destination').selectedOptions[0].innerHTML;
-		var dest = $Player.log.training.destination;
-	
-		// build the confirmation message string
-		var msg = "You're about to train at " + dest + " every ";
-		
-		// if interval is longer than 60 seconds
-		if (interval/1000 > 60)  {
-			// say how many minutes
-			var trainingInterval = interval/1000/60 + " minutes.  ";
-		} else {
-			// say how many seconds
-			var trainingInterval = interval/1000 + " seconds.  "; 
-		}	
-		
-		msg += trainingInterval + "Do it?";
-
-		// confirm sure they want to train in the selected destination 
-		if (window.confirm(msg)) {
-			// announce the new training schedule
-			console.log(new Date() + ': beginning training at ' + dest + ' every ' + trainingInterval);
-		
-			// go on a quest, optionally 
-			$Player.quest(!!eat);
-		
-			// schedule the iteration
-			$Player.log.training.intervalID = setInterval(function() { $Player.quest(!!eat) }, interval);
-		} else {
-			console.log('You canceled training at ' + dest + ' every ' + interval/1000 + ' seconds.');
-		}
 	}
+	
+	var newSession = {}.
+		
+	// set to 5 minutes by default
+	if (interval === undefined) {
+		interval = 5 * 60
+	}
+	
+
+	// get the current selected destination
+	newSession.destination = document.getElementById('quest_destination').selectedOptions[0].innerHTML;
+
+	// build the confirmation message string
+	var msg = "You're about to train at " + newSession.destination + " every ";
+	
+	// if interval is longer than 60 seconds
+	if (interval > 60)  {
+		// say how many minutes
+		var trainingInterval = interval/60 + " minutes.  ";
+	} else {
+		// say how many seconds
+		var trainingInterval = interval + " seconds.  "; 
+	}	
+	
+	msg += trainingInterval + "Do it?";
+
+	// confirm sure they want to train in the selected destination 
+	if (window.confirm(msg)) {
+		// announce the new training schedule
+		console.log(new Date() + ': starting training session at ' + newSession.destination + ' every ' + trainingInterval);
+	
+		if (!!eat) { $Player.eat(); }
+		
+		// go on a quest
+		$Player.epicQuest();
+	
+		// schedule the iteration; multiply by 1000 to get milliseconds
+		$Player.log.training.intervalID = setInterval(function() { 
+				if (!!eat) { $Player.eat(); }
+				$Player.quest() 
+			}
+			, interval * 1000 
+		);
+	} else {
+		console.log('You have stopped training at ' + newSession.destination + ' every ' + trainingInterval);
+	}
+
 };
 
-$Player.stopTraining = stopTraining;
-$Player.eat = eat;
-$Player.quest = quest;
-$Player.stockpile = stockpile;
-$Player.train = train;
+// i want to make a player object
+// each method should have this.otherMethod(); syntax available
+var $Player = {
+	log : {
+		fundRaising : [],
+		training : [],
+		newTrainingSession : newTrainingSession
+	},
+	
+	// shortcut for getting the current session id
+	get currentSessionID() {
+		return this.log.training.length -1;
+	}
+	
+	// shortcut for getting a copy of the current session
+	get currentSession() {
+		return this.log.training[this.currentSessionID];
+	},
+	
+	// shortcut for setting the current session 
+	set currentSession(session) {
+		this.log.training[this.currentSessionID] = session;
+	},
+	
+	// shortcut for getting the current quest id
+	get currentQuestID() {
+		return this.log.training[this.currentSessionID].quests.length -1;
+	}	
+	
+	// shortcut for getting the current quest
+	get currentQuest() {
+		return this.log.training.sessions[this.currentSessionID].quests[this.currentQuestID];
+	}, 
+	
+	// shortcut for setting the current quest
+	set currentQuest(quest) {
+		this.log.training[this.currentSessionID].quests[this.currentQuestID] = quest;
+	},
+		
+	eat 			: eat,
+	epicQuest 		: epicQuest,
+	stockpile 		: stockpile,
+	stopTraining 	: stopTraining,
+	train 			: train
+};
+
 
 console.log ($Player);
 
