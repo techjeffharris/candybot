@@ -84,44 +84,28 @@ $Player.workOut = function workOut() {
 	}, TIMEOUT);
 };
 	
-$Player.train = function(interval) {
-	// set to 5 minutes by default
-	if (interval === undefined) {
-		interval = 5 * 60 * 1000;
-	}
-	
+$Player.train = function() {
 	// get the current selected destination
 	$Player.log.training.destination = document.getElementById('quest_destination').selectedOptions[0].innerHTML;
 	var dest = $Player.log.training.destination;
 	
 	// build the confirmation message string
-	var msg = "You're about to train at " + dest + " every ";
-	
-	// if interval is longer than 60 seconds
-	if (interval/1000 > 60)  {
-		// say how many minutes
-		var trainingInterval = interval/1000/60 + " minutes.  ";
-	} else {
-		// say how many seconds
-		var trainingInterval = interval/1000 + " seconds.  "; 
-	}	
-	
-	msg += trainingInterval + "Do it?";
+	var msg = "You're about to train at " + dest + "Do it?";
 
 	// confirm sure they want to train in the selected destination 
 	if (window.confirm(msg)) {
 		// announce the new training schedule
-		console.log(new Date() + ': beginning training at ' + dest + ' every ' + trainingInterval);
-		
+		console.log(new Date() + ': beginning training session at ' + dest + '.');
+			
 		// do it once now
 		$Player.workOut();
 		
-		// schedule the iteration
-		$Player.log.training.intervalID = setInterval($Player.workOut, interval);
-	} else {
-		console.log('You canceled training at ' + dest + ' every ' + interval/1000 + ' seconds.');
-	}
-		
+		$Player.log.training.intervalID = setInterval(function() {
+			if (document.getElementById('quest').innerHTML === '' ) {
+				$Player.workOut();
+			}
+		}, 1000);
+	}		
 };
 
 console.log ($Player);
