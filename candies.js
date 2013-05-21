@@ -1,13 +1,6 @@
 	
 $Player = {};
 
-// just realized that I can create an object with keys correspond to each quest 
-// destination and values that correspond to the default interval setting..
-trainingIntervals = {},
-trainingIntervals["The peaceful forest"] 	= 20 * 1000;
-trainingIntervals["Mount Goblin"] 			= 5 * 60 * 1000;
-trainingIntervals["Underwater Cave"] 		= 60 * 1000;
-
 $Player.log = {
 	eating : {
 		meals : 0,
