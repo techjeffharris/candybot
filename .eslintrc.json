@@ -5,9 +5,10 @@
     "browser": true
   },
   "globals": {
+    "candies": true,
+    "objects": true,
     "player": true,
     "quest": true,
-    "candies": true,
     "save": true
   },
   "extends": "eslint:recommended",
