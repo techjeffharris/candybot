@@ -1,6 +1,6 @@
 "use strict";
 
-window.CandyBoxBot = (function exportCandyBoxBot () {
+window.CandyBot = (function exportCandyBot () {
 
   const DEFAULTS_AUTO_EAT       = false
   const DEFAULTS_AUTO_QUEST     = false
@@ -12,7 +12,7 @@ window.CandyBoxBot = (function exportCandyBoxBot () {
   let scheduleWorkoutTimeout
 
 
-  function CandyBoxBot_Class(options) {
+  function CandyBot_Class(options) {
 
     options = options || {}
 
@@ -375,6 +375,6 @@ window.CandyBoxBot = (function exportCandyBoxBot () {
     }
   }
 
-  return CandyBoxBot_Class
+  return CandyBot_Class
 
 }())
