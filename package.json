@@ -1,0 +1,26 @@
+{
+  "name": "candybot",
+  "version": "1.0.0",
+  "description": "A JavaScript Bot for the original Candy box ! \\o/",
+  "main": "candybot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techjeffharris/candybot.git"
+  },
+  "keywords": [
+    "candies",
+    "candybox",
+    "aniwey",
+    "bot",
+    "hack"
+  ],
+  "author": "Jeff Harris",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/techjeffharris/candybot/issues"
+  },
+  "homepage": "https://github.com/techjeffharris/candybot#readme"
+}
